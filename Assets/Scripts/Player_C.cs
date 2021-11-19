@@ -6,22 +6,24 @@ public class Player_C : MonoBehaviour
     // 空地
     private GameObject prefab_Crop_Empty;
 
-    // 向日葵
-    public GameObject Prefab_Crop_Sunflower;
+    // 临时持有的建筑物 脚本
+    private BaseBuild tempBuild;
 
-    // 临时持有的空地 脚本
-    private Crop_Empty crop_Empty;
-
-    // 全部植物
-    private List<GameObject> crops = new List<GameObject>();
+    // 全部建筑物
+    private List<BaseBuild> buildList = new List<BaseBuild>();
 
     void Start()
     {
         prefab_Crop_Empty = Resources.Load<GameObject>("Crop_Empty");
-        crop_Empty = GameObject.Instantiate<GameObject>(prefab_Crop_Empty).GetComponent<Crop_Empty>();
+        tempBuild = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Build_Shop")).GetComponent<BaseBuild>();
     }
 
     void Update()
+    {
+        Build(Resources.Load<GameObject>("Build_Shop"));
+    }
+
+    public void Build(GameObject prefab)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -31,24 +33,24 @@ public class Player_C : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject.tag == "Ground")
             {
                 // 可以吸附的植物
-                GameObject crop = null;
+                BaseBuild build = null;
                 // 查找 有没有很近的植物
-                for (int i = 0; i < crops.Count; i++)
+                for (int i = 0; i < buildList.Count; i++)
                 {
-                    // 如果小于12米
-                    if (Vector3.Distance(hit.point, crops[i].transform.position) < 12)
+                    // 如果小于一定距离
+                    if (Vector3.Distance(hit.point, buildList[i].transform.position) < (buildList[i].Size / 2) + 2 + tempBuild.Size / 2)
                     {
-                        crop = crops[i];
+                        build = buildList[i];
                         break;
                     }
                 }
-                if (crop != null)
+                if (build != null)
                 {
                     // 吸附
-                    Vector3 top = crop.transform.position + new Vector3(0, 0, 10);
-                    Vector3 bottom = crop.transform.position + new Vector3(0, 0, -10);
-                    Vector3 left = crop.transform.position + new Vector3(-10, 0, 0);
-                    Vector3 right = crop.transform.position + new Vector3(10, 0, 0);
+                    Vector3 top = build.transform.position + new Vector3(0, 0, 10);
+                    Vector3 bottom = build.transform.position + new Vector3(0, 0, -10);
+                    Vector3 left = build.transform.position + new Vector3(-10, 0, 0);
+                    Vector3 right = build.transform.position + new Vector3(10, 0, 0);
                     Vector3[] points = new Vector3[] { top, bottom, left, right };
 
                     // 吸附的位置
@@ -62,22 +64,22 @@ public class Player_C : MonoBehaviour
                             temp = points[i];
                         }
                     }
-                    crop_Empty.transform.position = temp;
+                    tempBuild.transform.position = temp;
                 }
                 else
                 {
                     // 让鼠标处有一块空地跟着跑
-                    crop_Empty.transform.position = hit.point;
+                    tempBuild.transform.position = hit.point;
                 }
 
             }
             //鼠标左键 建造
             if (Input.GetMouseButtonDown(0))
             {
-                if (crop_Empty.CanCreate)
+                if (tempBuild.CanCreate)
                 {
-                    GameObject temp = GameObject.Instantiate<GameObject>(Prefab_Crop_Sunflower, crop_Empty.transform.position, Quaternion.identity, null);
-                    crops.Add(temp);
+                    GameObject temp = GameObject.Instantiate<GameObject>(prefab, tempBuild.transform.position, Quaternion.identity, null);
+                    buildList.Add(temp.GetComponent<BaseBuild>());
                 }
                 else
                 {

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3391476102730438393}
   - component: {fileID: 1188210125712914210}
   - component: {fileID: 1445275717801810020}
+  - component: {fileID: 5563832026532549106}
+  - component: {fileID: 3525022521297847032}
   m_Layer: 0
   m_Name: Crop_Sunflower
   m_TagString: Crop
@@ -90,8 +92,36 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2332093157001511691}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 0.40234235, z: 10}
+  m_Size: {x: 9.9, y: 0.40234235, z: 9.9}
   m_Center: {x: 0, y: 0.20117097, z: 0}
+--- !u!114 &5563832026532549106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332093157001511691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff64275d31900400f8613702e0458d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &3525022521297847032
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332093157001511691}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 2
