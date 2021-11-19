@@ -8,6 +8,7 @@ public class Player_C : MonoBehaviour
 
     // 临时持有的建筑物 脚本
     private BaseBuild tempBuild;
+    private GameObject tempBuildPrefab;
 
     // 全部建筑物
     private List<BaseBuild> buildList = new List<BaseBuild>();
@@ -16,14 +17,42 @@ public class Player_C : MonoBehaviour
     {
         prefab_Crop_Empty = Resources.Load<GameObject>("Crop_Empty");
         tempBuild = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Build_Shop")).GetComponent<BaseBuild>();
+        Build(Resources.Load<GameObject>("Build_Shop"));
     }
 
     void Update()
     {
-        Build(Resources.Load<GameObject>("Build_Shop"));
+        if (tempBuild != null)
+        {
+            BuildForUpdate();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Build(Resources.Load<GameObject>("Build_Shop"));
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Build(Resources.Load<GameObject>("Crop_Empty"));
+        }
+
     }
 
     public void Build(GameObject prefab)
+    {
+        // 预制件
+        tempBuildPrefab = prefab;
+        // 预制件实例
+        if (tempBuild != null)
+        {
+            // 销毁之前的临时实例
+            Destroy(tempBuild.gameObject);
+        }
+        tempBuild = GameObject.Instantiate<GameObject>(prefab).GetComponent<BaseBuild>();
+    }
+
+    private void BuildForUpdate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -38,7 +67,7 @@ public class Player_C : MonoBehaviour
                 for (int i = 0; i < buildList.Count; i++)
                 {
                     // 如果小于一定距离
-                    if (Vector3.Distance(hit.point, buildList[i].transform.position) < (buildList[i].Size / 2) + 2 + tempBuild.Size / 2)
+                    if (Vector3.Distance(hit.point, buildList[i].transform.position) < (buildList[i].Size / 2) + 2 + (tempBuild.Size / 2))
                     {
                         build = buildList[i];
                         break;
@@ -47,10 +76,11 @@ public class Player_C : MonoBehaviour
                 if (build != null)
                 {
                     // 吸附
-                    Vector3 top = build.transform.position + new Vector3(0, 0, 10);
-                    Vector3 bottom = build.transform.position + new Vector3(0, 0, -10);
-                    Vector3 left = build.transform.position + new Vector3(-10, 0, 0);
-                    Vector3 right = build.transform.position + new Vector3(10, 0, 0);
+                    float offset = build.Size / 2 + tempBuild.Size / 2;
+                    Vector3 top = build.transform.position + new Vector3(0, 0, offset);
+                    Vector3 bottom = build.transform.position + new Vector3(0, 0, -offset);
+                    Vector3 left = build.transform.position + new Vector3(-offset, 0, 0);
+                    Vector3 right = build.transform.position + new Vector3(offset, 0, 0);
                     Vector3[] points = new Vector3[] { top, bottom, left, right };
 
                     // 吸附的位置
@@ -78,7 +108,7 @@ public class Player_C : MonoBehaviour
             {
                 if (tempBuild.CanCreate)
                 {
-                    GameObject temp = GameObject.Instantiate<GameObject>(prefab, tempBuild.transform.position, Quaternion.identity, null);
+                    GameObject temp = GameObject.Instantiate<GameObject>(tempBuildPrefab, tempBuild.transform.position, Quaternion.identity, null);
                     buildList.Add(temp.GetComponent<BaseBuild>());
                 }
                 else
