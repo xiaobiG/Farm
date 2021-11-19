@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player_C : MonoBehaviour
 {
+    public static Player_C Instance;
+
     // 空地
     private GameObject prefab_Crop_Empty;
 
@@ -13,6 +15,11 @@ public class Player_C : MonoBehaviour
     // 全部建筑物
     private List<BaseBuild> buildList = new List<BaseBuild>();
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         prefab_Crop_Empty = Resources.Load<GameObject>("Crop_Empty");
@@ -22,6 +29,14 @@ public class Player_C : MonoBehaviour
 
     void Update()
     {
+        // 右键取消建造状态
+        if (Input.GetMouseButtonDown(1))
+        {
+            Destroy(tempBuild.gameObject);
+            tempBuild = null;
+            return;
+        }
+
         if (tempBuild != null)
         {
             BuildForUpdate();

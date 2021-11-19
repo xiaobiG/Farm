@@ -3,8 +3,13 @@ using UnityEngine.UI;
 
 public class UI_BuildPanel : MonoBehaviour
 {
-
+    public static UI_BuildPanel Instance;
     private Button CloseButton;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
