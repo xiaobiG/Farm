@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 347902410098014105}
   - component: {fileID: 3709880820558460988}
   - component: {fileID: 1484168876231691510}
+  - component: {fileID: 1414138416244132792}
+  - component: {fileID: 1331483412207746526}
+  - component: {fileID: -7095202984961412598}
   m_Layer: 0
   m_Name: Crop_Empty
   m_TagString: Untagged
@@ -81,3 +84,44 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1414138416244132792
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123700653954477347}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.9, y: 0.40234235, z: 9.9}
+  m_Center: {x: 0, y: 0.20117097, z: 0}
+--- !u!114 &1331483412207746526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123700653954477347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc374dc17802740a09ca85a29e9f0a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &-7095202984961412598
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123700653954477347}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 2

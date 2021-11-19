@@ -1,20 +1,24 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_C : MonoBehaviour
 {
     // 空地
-    public GameObject Prefab_Crop_Empty;
+    private GameObject prefab_Crop_Empty;
+
     // 向日葵
     public GameObject Prefab_Crop_Sunflower;
-    // 临时持有的空地
-    private GameObject crop_Empty;
+
+    // 临时持有的空地 脚本
+    private Crop_Empty crop_Empty;
+
     // 全部植物
     private List<GameObject> crops = new List<GameObject>();
+
     void Start()
     {
-        crop_Empty = GameObject.Instantiate<GameObject>(Prefab_Crop_Empty);
+        prefab_Crop_Empty = Resources.Load<GameObject>("Crop_Empty");
+        crop_Empty = GameObject.Instantiate<GameObject>(prefab_Crop_Empty).GetComponent<Crop_Empty>();
     }
 
     void Update()
@@ -70,8 +74,16 @@ public class Player_C : MonoBehaviour
             //鼠标左键 建造
             if (Input.GetMouseButtonDown(0))
             {
-                GameObject temp = GameObject.Instantiate<GameObject>(Prefab_Crop_Sunflower, crop_Empty.transform.position, Quaternion.identity, null);
-                crops.Add(temp);
+                if (crop_Empty.CanCreate)
+                {
+                    GameObject temp = GameObject.Instantiate<GameObject>(Prefab_Crop_Sunflower, crop_Empty.transform.position, Quaternion.identity, null);
+                    crops.Add(temp);
+                }
+                else
+                {
+                    Debug.Log("重叠，不能创建");
+                }
+
             }
         }
     }

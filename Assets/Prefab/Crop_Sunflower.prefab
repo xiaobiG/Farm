@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 3065453987044331717}
   - component: {fileID: 3391476102730438393}
   - component: {fileID: 1188210125712914210}
+  - component: {fileID: 1445275717801810020}
   m_Layer: 0
   m_Name: Crop_Sunflower
-  m_TagString: Untagged
+  m_TagString: Crop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1445275717801810020
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332093157001511691}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 0.40234235, z: 10}
+  m_Center: {x: 0, y: 0.20117097, z: 0}
